@@ -1,0 +1,15 @@
+package testdata
+
+const UnknownStr = "?????"
+const FolderInitialize = "initialize"
+const FolderInitializeFailed = "initializeFailed"
+const FolderSearchExcel = "searchExcel"
+const FolderSearchSheet = "searchSheet"
+const ConfigReal = "config_real.yaml"
+const ConfigBuild = "config_build.yaml"
+const ConfigFake = "config_fake.yaml"
+const ExcelTest0 = "test0.xlsx"
+const ExcelTest1 = "test1.xlsx"
+const ExcelTest2 = "test2.xlsx"
+const SheetTest1 = "Test1"
+const SheetTest2 = "Test2"
