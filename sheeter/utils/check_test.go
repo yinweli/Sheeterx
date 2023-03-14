@@ -16,15 +16,15 @@ func TestCheck(t *testing.T) {
 
 type SuiteCheck struct {
 	suite.Suite
-	testdata.TestEnv
+	testdata.TestData
 }
 
 func (this *SuiteCheck) SetupSuite() {
-	this.Change("test-utils-check")
+	this.TBegin("test-utils-check", "")
 }
 
 func (this *SuiteCheck) TearDownSuite() {
-	this.Restore()
+	this.TFinal()
 }
 
 func (this *SuiteCheck) TestCheckKeyword() {
@@ -36,7 +36,7 @@ func (this *SuiteCheck) TestCheckKeyword() {
 
 func (this *SuiteCheck) TestCheckIgnore() {
 	assert.True(this.T(), CheckIgnore(sheeter.TokenIgnore+"data"))
-	assert.False(this.T(), CheckIgnore(testdata.UnknownStr))
+	assert.False(this.T(), CheckIgnore(this.Unknown))
 }
 
 func (this *SuiteCheck) TestCheckName() {

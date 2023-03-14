@@ -16,15 +16,15 @@ func TestLong(t *testing.T) {
 
 type SuiteLong struct {
 	suite.Suite
-	testdata.TestEnv
+	testdata.TestData
 }
 
 func (this *SuiteLong) SetupSuite() {
-	this.Change("test-fields-long")
+	this.TBegin("test-fields-long", "")
 }
 
 func (this *SuiteLong) TearDownSuite() {
-	this.Restore()
+	this.TFinal()
 }
 
 func (this *SuiteLong) TestField() {
@@ -45,7 +45,7 @@ func (this *SuiteLong) TestToJsonValue() {
 	_, err = target.ToJsonValue("")
 	assert.NotNil(this.T(), err)
 
-	_, err = target.ToJsonValue(testdata.UnknownStr)
+	_, err = target.ToJsonValue(this.Unknown)
 	assert.NotNil(this.T(), err)
 }
 

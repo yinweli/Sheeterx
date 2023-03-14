@@ -17,15 +17,15 @@ func TestNamed(t *testing.T) {
 
 type SuiteNamed struct {
 	suite.Suite
-	testdata.TestEnv
+	testdata.TestData
 }
 
 func (this *SuiteNamed) SetupSuite() {
-	this.Change("test-nameds-named")
+	this.TBegin("test-nameds-named", "")
 }
 
 func (this *SuiteNamed) TearDownSuite() {
-	this.Restore()
+	this.TFinal()
 }
 
 func (this *SuiteNamed) TestName() {

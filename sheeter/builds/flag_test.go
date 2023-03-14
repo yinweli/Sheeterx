@@ -16,15 +16,15 @@ func TestFlag(t *testing.T) {
 
 type SuiteFlag struct {
 	suite.Suite
-	testdata.TestEnv
+	testdata.TestData
 }
 
 func (this *SuiteFlag) SetupSuite() {
-	this.Change("test-builds-flag")
+	this.TBegin("test-builds-flag", "")
 }
 
 func (this *SuiteFlag) TearDownSuite() {
-	this.Restore()
+	this.TFinal()
 }
 
 func (this *SuiteFlag) TestSetFlag() {

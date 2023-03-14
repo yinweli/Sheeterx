@@ -16,15 +16,15 @@ func TestBoolArray(t *testing.T) {
 
 type SuiteBoolArray struct {
 	suite.Suite
-	testdata.TestEnv
+	testdata.TestData
 }
 
 func (this *SuiteBoolArray) SetupSuite() {
-	this.Change("test-fields-boolArray")
+	this.TBegin("test-fields-boolArray", "")
 }
 
 func (this *SuiteBoolArray) TearDownSuite() {
-	this.Restore()
+	this.TFinal()
 }
 
 func (this *SuiteBoolArray) TestField() {
@@ -45,7 +45,7 @@ func (this *SuiteBoolArray) TestToJsonValue() {
 	_, err = target.ToJsonValue("")
 	assert.NotNil(this.T(), err)
 
-	_, err = target.ToJsonValue(testdata.UnknownStr)
+	_, err = target.ToJsonValue(this.Unknown)
 	assert.NotNil(this.T(), err)
 }
 

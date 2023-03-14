@@ -15,15 +15,15 @@ func TestCombine(t *testing.T) {
 
 type SuiteCombine struct {
 	suite.Suite
-	testdata.TestEnv
+	testdata.TestData
 }
 
 func (this *SuiteCombine) SetupSuite() {
-	this.Change("test-nameds-combine")
+	this.TBegin("test-nameds-combine", "")
 }
 
 func (this *SuiteCombine) TearDownSuite() {
-	this.Restore()
+	this.TFinal()
 }
 
 func (this *SuiteCombine) TestCombine() {

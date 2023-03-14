@@ -16,15 +16,15 @@ func TestLongArray(t *testing.T) {
 
 type SuiteLongArray struct {
 	suite.Suite
-	testdata.TestEnv
+	testdata.TestData
 }
 
 func (this *SuiteLongArray) SetupSuite() {
-	this.Change("test-fields-longArray")
+	this.TBegin("test-fields-longArray", "")
 }
 
 func (this *SuiteLongArray) TearDownSuite() {
-	this.Restore()
+	this.TFinal()
 }
 
 func (this *SuiteLongArray) TestField() {
@@ -45,7 +45,7 @@ func (this *SuiteLongArray) TestToJsonValue() {
 	_, err = target.ToJsonValue("")
 	assert.NotNil(this.T(), err)
 
-	_, err = target.ToJsonValue(testdata.UnknownStr)
+	_, err = target.ToJsonValue(this.Unknown)
 	assert.NotNil(this.T(), err)
 }
 

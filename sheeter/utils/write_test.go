@@ -16,17 +16,17 @@ func TestWrite(t *testing.T) {
 
 type SuiteWrite struct {
 	suite.Suite
-	testdata.TestEnv
-	dirReal string
+	testdata.TestData
+	fileExist string
 }
 
 func (this *SuiteWrite) SetupSuite() {
-	this.Change("test-utils-write")
-	this.dirReal = "write"
+	this.TBegin("test-utils-write", "write")
+	this.fileExist = "exist.txt"
 }
 
 func (this *SuiteWrite) TearDownSuite() {
-	this.Restore()
+	this.TFinal()
 }
 
 func (this *SuiteWrite) TestFileName() {
@@ -34,8 +34,8 @@ func (this *SuiteWrite) TestFileName() {
 }
 
 func (this *SuiteWrite) TestFileExist() {
-	assert.True(this.T(), FileExist(testdata.ConfigReal))
-	assert.False(this.T(), FileExist(testdata.UnknownStr))
+	assert.True(this.T(), FileExist(this.fileExist))
+	assert.False(this.T(), FileExist(this.Unknown))
 }
 
 func (this *SuiteWrite) TestWriteFile() {
@@ -43,5 +43,5 @@ func (this *SuiteWrite) TestWriteFile() {
 	data := []byte("this is a string")
 
 	assert.Nil(this.T(), WriteFile(path, data))
-	testdata.CompareFile(this.T(), path, data)
+	this.CompareFile(this.T(), path, data)
 }

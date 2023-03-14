@@ -18,16 +18,18 @@ func TestBuild(t *testing.T) {
 
 type SuiteBuild struct {
 	suite.Suite
-	testdata.TestEnv
+	testdata.TestData
+	configReal string
 }
 
 func (this *SuiteBuild) SetupSuite() {
-	this.Change("test-cmd-build")
+	this.TBegin("test-cmd-build", "build")
+	this.configReal = "configReal.yaml"
 }
 
 func (this *SuiteBuild) TearDownSuite() {
 	excels.CloseAll()
-	this.Restore()
+	this.TFinal()
 }
 
 func (this *SuiteBuild) TestNewCommand() {
@@ -37,7 +39,7 @@ func (this *SuiteBuild) TestNewCommand() {
 func (this *SuiteBuild) TestExecute() {
 	config := "config"
 	cmd := NewCommand()
-	assert.Nil(this.T(), cmd.Flags().Set(config, testdata.ConfigBuild))
+	assert.Nil(this.T(), cmd.Flags().Set(config, this.configReal))
 	assert.Nil(this.T(), cmd.Execute())
 	assert.FileExists(this.T(), filepath.Join(sheeter.CsPath, "RealData.cs"))
 	assert.FileExists(this.T(), filepath.Join(sheeter.CsPath, "Sheeter.cs"))

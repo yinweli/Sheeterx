@@ -18,15 +18,15 @@ func TestField(t *testing.T) {
 
 type SuiteField struct {
 	suite.Suite
-	testdata.TestEnv
+	testdata.TestData
 }
 
 func (this *SuiteField) SetupSuite() {
-	this.Change("test-nameds-field")
+	this.TBegin("test-nameds-field", "")
 }
 
 func (this *SuiteField) TearDownSuite() {
-	this.Restore()
+	this.TFinal()
 }
 
 func (this *SuiteField) TestName() {

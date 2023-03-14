@@ -1,8 +1,6 @@
 package builds
 
 import (
-	"io/fs"
-	"os"
 	"testing"
 
 	"github.com/spf13/cobra"
@@ -18,31 +16,32 @@ func TestConfig(t *testing.T) {
 
 type SuiteConfig struct {
 	suite.Suite
-	testdata.TestEnv
-	path1 string
-	path2 string
-	path3 string
-	path4 string
+	testdata.TestData
+	configReal string
+	configFake string
+	path1      string
+	path2      string
+	path3      string
+	path4      string
 }
 
 func (this *SuiteConfig) SetupSuite() {
-	this.Change("test-builds-config")
+	this.TBegin("test-builds-config", "config")
+	this.configReal = "configReal.yaml"
+	this.configFake = "configFake.yaml"
 	this.path1 = "path"
 	this.path2 = "path/file.xlsx"
 	this.path3 = "path/file.fail"
 	this.path4 = "????"
-	_ = os.MkdirAll(this.path1, os.ModePerm)
-	_ = os.WriteFile(this.path2, []byte{}, fs.ModePerm)
-	_ = os.WriteFile(this.path3, []byte{}, fs.ModePerm)
 }
 
 func (this *SuiteConfig) TearDownSuite() {
-	this.Restore()
+	this.TFinal()
 }
 
 func (this *SuiteConfig) TestInitialize() {
 	cmd := SetFlag(&cobra.Command{})
-	assert.Nil(this.T(), cmd.Flags().Set(flagConfig, testdata.ConfigReal))
+	assert.Nil(this.T(), cmd.Flags().Set(flagConfig, this.configReal))
 	config := Config{}
 	assert.Nil(this.T(), config.Initialize(cmd))
 	assert.Equal(this.T(), 101, config.Global.LineOfTag)
@@ -72,12 +71,12 @@ func (this *SuiteConfig) TestInitialize() {
 	assert.Equal(this.T(), []string{"path/excel1.xlsx", "path/excel2.xlsx"}, config.Source)
 
 	cmd = SetFlag(&cobra.Command{})
-	assert.Nil(this.T(), cmd.Flags().Set(flagConfig, testdata.ConfigFake))
+	assert.Nil(this.T(), cmd.Flags().Set(flagConfig, this.configFake))
 	config = Config{}
 	assert.NotNil(this.T(), config.Initialize(cmd))
 
 	cmd = SetFlag(&cobra.Command{})
-	assert.Nil(this.T(), cmd.Flags().Set(flagConfig, testdata.UnknownStr))
+	assert.Nil(this.T(), cmd.Flags().Set(flagConfig, this.Unknown))
 	config = Config{}
 	assert.NotNil(this.T(), config.Initialize(cmd))
 }

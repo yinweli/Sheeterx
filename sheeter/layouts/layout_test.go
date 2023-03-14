@@ -16,15 +16,15 @@ func TestLayout(t *testing.T) {
 
 type SuiteLayout struct {
 	suite.Suite
-	testdata.TestEnv
+	testdata.TestData
 }
 
 func (this *SuiteLayout) SetupSuite() {
-	this.Change("test-layouts-layout")
+	this.TBegin("test-layouts-layout", "")
 }
 
 func (this *SuiteLayout) TearDownSuite() {
-	this.Restore()
+	this.TFinal()
 }
 
 func (this *SuiteLayout) TestNewLayout() {
@@ -84,7 +84,7 @@ func (this *SuiteLayout) TestPack() {
 	assert.Equal(this.T(), "1", pkey)
 	assert.Equal(this.T(), actual3, result)
 
-	result, pkey, err = target.Pack("1", []string{"1", "@", "1,2,3", "a", "a,b,c"})
+	_, _, err = target.Pack("1", []string{"1", "@", "1,2,3", "a", "a,b,c"})
 	assert.NotNil(this.T(), err)
 }
 

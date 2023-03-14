@@ -15,15 +15,15 @@ func TestVersion(t *testing.T) {
 
 type SuiteVersion struct {
 	suite.Suite
-	testdata.TestEnv
+	testdata.TestData
 }
 
 func (this *SuiteVersion) SetupSuite() {
-	this.Change("test-cmd-version")
+	this.TBegin("test-cmd-version", "")
 }
 
 func (this *SuiteVersion) TearDownSuite() {
-	this.Restore()
+	this.TFinal()
 }
 
 func (this *SuiteVersion) TestNewCommand() {

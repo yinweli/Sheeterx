@@ -15,15 +15,15 @@ func TestConvert(t *testing.T) {
 
 type SuiteConvert struct {
 	suite.Suite
-	testdata.TestEnv
+	testdata.TestData
 }
 
 func (this *SuiteConvert) SetupSuite() {
-	this.Change("test-utils-convert")
+	this.TBegin("test-utils-convert", "")
 }
 
 func (this *SuiteConvert) TearDownSuite() {
-	this.Restore()
+	this.TFinal()
 }
 
 func (this *SuiteConvert) TestStrToBool() {
@@ -51,7 +51,7 @@ func (this *SuiteConvert) TestStrToBool() {
 	assert.Nil(this.T(), err)
 	assert.Equal(this.T(), false, value)
 
-	_, err = StrToBool(testdata.UnknownStr)
+	_, err = StrToBool(this.Unknown)
 	assert.NotNil(this.T(), err)
 }
 
@@ -77,7 +77,7 @@ func (this *SuiteConvert) TestStrToInt32() {
 	assert.Nil(this.T(), err)
 	assert.Equal(this.T(), int32(123456789), value)
 
-	_, err = StrToInt32(testdata.UnknownStr)
+	_, err = StrToInt32(this.Unknown)
 	assert.NotNil(this.T(), err)
 }
 
@@ -86,7 +86,7 @@ func (this *SuiteConvert) TestStrToInt32Array() {
 	assert.Nil(this.T(), err)
 	assert.Equal(this.T(), []int32{123, 456, 789}, value)
 
-	_, err = StrToInt32Array(testdata.UnknownStr)
+	_, err = StrToInt32Array(this.Unknown)
 	assert.NotNil(this.T(), err)
 }
 
@@ -95,7 +95,7 @@ func (this *SuiteConvert) TestStrToInt64() {
 	assert.Nil(this.T(), err)
 	assert.Equal(this.T(), int64(123456789), value)
 
-	_, err = StrToInt32(testdata.UnknownStr)
+	_, err = StrToInt32(this.Unknown)
 	assert.NotNil(this.T(), err)
 }
 
@@ -104,7 +104,7 @@ func (this *SuiteConvert) TestStrToInt64Array() {
 	assert.Nil(this.T(), err)
 	assert.Equal(this.T(), []int64{123, 456, 789}, value)
 
-	_, err = StrToInt64Array(testdata.UnknownStr)
+	_, err = StrToInt64Array(this.Unknown)
 	assert.NotNil(this.T(), err)
 }
 
@@ -113,7 +113,7 @@ func (this *SuiteConvert) TestStrToFloat32() {
 	assert.Nil(this.T(), err)
 	assert.Equal(this.T(), float32(0.12345), value)
 
-	_, err = StrToFloat64(testdata.UnknownStr)
+	_, err = StrToFloat64(this.Unknown)
 	assert.NotNil(this.T(), err)
 }
 
@@ -122,7 +122,7 @@ func (this *SuiteConvert) TestStrToFloat32Array() {
 	assert.Nil(this.T(), err)
 	assert.Equal(this.T(), []float32{0.123, 0.456, 0.789}, value)
 
-	_, err = StrToFloat32Array(testdata.UnknownStr)
+	_, err = StrToFloat32Array(this.Unknown)
 	assert.NotNil(this.T(), err)
 }
 
@@ -131,7 +131,7 @@ func (this *SuiteConvert) TestStrToFloat64() {
 	assert.Nil(this.T(), err)
 	assert.Equal(this.T(), 0.12345, value)
 
-	_, err = StrToFloat64(testdata.UnknownStr)
+	_, err = StrToFloat64(this.Unknown)
 	assert.NotNil(this.T(), err)
 }
 
@@ -140,7 +140,7 @@ func (this *SuiteConvert) TestStrToFloat64Array() {
 	assert.Nil(this.T(), err)
 	assert.Equal(this.T(), []float64{0.123, 0.456, 0.789}, value)
 
-	_, err = StrToFloat64Array(testdata.UnknownStr)
+	_, err = StrToFloat64Array(this.Unknown)
 	assert.NotNil(this.T(), err)
 }
 

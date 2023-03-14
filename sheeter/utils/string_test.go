@@ -15,15 +15,15 @@ func TestString(t *testing.T) {
 
 type SuiteString struct {
 	suite.Suite
-	testdata.TestEnv
+	testdata.TestData
 }
 
 func (this *SuiteString) SetupSuite() {
-	this.Change("test-utils-string")
+	this.TBegin("test-utils-string", "")
 }
 
 func (this *SuiteString) TearDownSuite() {
-	this.Restore()
+	this.TFinal()
 }
 
 func (this *SuiteString) TestFirstUpper() {

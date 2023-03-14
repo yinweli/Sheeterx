@@ -16,15 +16,15 @@ func TestStringArray(t *testing.T) {
 
 type SuiteStringArray struct {
 	suite.Suite
-	testdata.TestEnv
+	testdata.TestData
 }
 
 func (this *SuiteStringArray) SetupSuite() {
-	this.Change("test-fields-stringArray")
+	this.TBegin("test-fields-stringArray", "")
 }
 
 func (this *SuiteStringArray) TearDownSuite() {
-	this.Restore()
+	this.TFinal()
 }
 
 func (this *SuiteStringArray) TestField() {
