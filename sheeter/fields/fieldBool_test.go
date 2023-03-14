@@ -24,7 +24,7 @@ func (this *SuiteBool) SetupSuite() {
 }
 
 func (this *SuiteBool) TearDownSuite() {
-	this.TestField()
+	this.TFinal()
 }
 
 func (this *SuiteBool) TestField() {
