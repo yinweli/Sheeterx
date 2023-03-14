@@ -1,6 +1,7 @@
 package excels
 
 import (
+	"path/filepath"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -29,7 +30,7 @@ func (this *SuiteExcel) TearDownSuite() {
 
 func (this *SuiteExcel) TestOpen() {
 	target := this.target()
-	assert.Nil(this.T(), target.Open(testdata.ExcelTest0))
+	assert.Nil(this.T(), target.Open(filepath.Join(testdata.FolderExcel, testdata.ExcelSuccess1)))
 	assert.True(this.T(), target.IsOpen())
 	target.Close()
 	assert.False(this.T(), target.IsOpen())
@@ -42,7 +43,7 @@ func (this *SuiteExcel) TestOpen() {
 
 func (this *SuiteExcel) TestGet() {
 	target := this.target()
-	assert.Nil(this.T(), target.Open(testdata.ExcelTest0))
+	assert.Nil(this.T(), target.Open(filepath.Join(testdata.FolderExcel, testdata.ExcelSuccess1)))
 
 	sheet, err := target.Get(testdata.SheetTest1)
 	assert.Nil(this.T(), err)
@@ -62,7 +63,7 @@ func (this *SuiteExcel) TestGet() {
 
 func (this *SuiteExcel) TestGetLine() {
 	target := this.target()
-	assert.Nil(this.T(), target.Open(testdata.ExcelTest0))
+	assert.Nil(this.T(), target.Open(filepath.Join(testdata.FolderExcel, testdata.ExcelSuccess1)))
 
 	line, err := target.GetLine(testdata.SheetTest1, 1, 2, 3)
 	assert.Nil(this.T(), err)
@@ -92,14 +93,14 @@ func (this *SuiteExcel) TestGetLine() {
 func (this *SuiteExcel) TestSheets() {
 	target := this.target()
 	assert.Equal(this.T(), []string{}, target.Sheets())
-	assert.Nil(this.T(), target.Open(testdata.ExcelTest0))
+	assert.Nil(this.T(), target.Open(filepath.Join(testdata.FolderExcel, testdata.ExcelSuccess1)))
 	assert.Equal(this.T(), []string{testdata.SheetTest1, testdata.SheetTest2}, target.Sheets())
 	CloseAll()
 }
 
 func (this *SuiteExcel) TestExist() {
 	target := this.target()
-	assert.Nil(this.T(), target.Open(testdata.ExcelTest0))
+	assert.Nil(this.T(), target.Open(filepath.Join(testdata.FolderExcel, testdata.ExcelSuccess1)))
 	assert.True(this.T(), target.Exist(testdata.SheetTest1))
 	assert.True(this.T(), target.Exist(testdata.SheetTest2))
 	assert.False(this.T(), target.Exist(testdata.UnknownStr))
@@ -108,7 +109,7 @@ func (this *SuiteExcel) TestExist() {
 
 func (this *SuiteExcel) TestSheet() {
 	target := this.target()
-	assert.Nil(this.T(), target.Open(testdata.ExcelTest0))
+	assert.Nil(this.T(), target.Open(filepath.Join(testdata.FolderExcel, testdata.ExcelSuccess1)))
 
 	sheet, err := target.Get(testdata.SheetTest1)
 	assert.Nil(this.T(), err)

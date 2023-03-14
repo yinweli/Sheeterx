@@ -53,22 +53,24 @@ func (this *SuiteInitialize) TestInitialize() {
 func (this *SuiteInitialize) TestSearchExcel() {
 	result := make(chan any, sheeter.MaxExcel)
 	assert.Nil(this.T(), searchExcel(testdata.FolderSearchExcel, result))
-	assert.Equal(this.T(), filepath.Join(testdata.FolderSearchExcel, testdata.ExcelTest0), <-result)
-	assert.Equal(this.T(), filepath.Join(testdata.FolderSearchExcel, testdata.ExcelTest1), <-result)
-	assert.Equal(this.T(), filepath.Join(testdata.FolderSearchExcel, testdata.ExcelTest2), <-result)
+	assert.Equal(this.T(), filepath.Join(testdata.FolderSearchExcel, testdata.ExcelSuccess1), <-result)
+	assert.Equal(this.T(), filepath.Join(testdata.FolderSearchExcel, testdata.ExcelSuccess2), <-result)
+	assert.Equal(this.T(), filepath.Join(testdata.FolderSearchExcel, testdata.ExcelSuccess3), <-result)
 }
 
 func (this *SuiteInitialize) TestSearchSheet() {
 	result := make(chan any, sheeter.MaxExcel)
-	assert.Nil(this.T(), searchSheet(filepath.Join(testdata.FolderSearchSheet, testdata.ExcelTest0), result))
+	assert.Nil(this.T(), searchSheet(filepath.Join(testdata.FolderSearchSheet, testdata.ExcelSuccess1), result))
 	prepare := (<-result).(*InitializeData)
 	assert.NotNil(this.T(), prepare.Excel)
 	assert.NotNil(this.T(), prepare.Sheet)
-	assert.Equal(this.T(), testdata.ExcelTest0, prepare.ExcelName)
+	assert.Equal(this.T(), testdata.ExcelSuccess1, prepare.ExcelName)
 	assert.Equal(this.T(), testdata.SheetTest1, prepare.SheetName)
 	prepare = (<-result).(*InitializeData)
 	assert.NotNil(this.T(), prepare.Excel)
 	assert.NotNil(this.T(), prepare.Sheet)
-	assert.Equal(this.T(), testdata.ExcelTest0, prepare.ExcelName)
+	assert.Equal(this.T(), testdata.ExcelSuccess1, prepare.ExcelName)
 	assert.Equal(this.T(), testdata.SheetTest2, prepare.SheetName)
+
+	assert.NotNil(this.T(), searchSheet(filepath.Join(testdata.FolderSearchSheet, testdata.ExcelFake), result))
 }
