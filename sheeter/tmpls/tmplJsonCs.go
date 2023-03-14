@@ -17,10 +17,10 @@ namespace {{$.Namespace | $.FirstUpper}}
     {
 {{- range $.Fields}}
         /// <summary>
-        /// {{$.FieldNote .}}
+        /// {{.FieldNote}}
         /// </summary>
-        [JsonProperty("{{$.FieldName .}}")]
-        public {{$.FieldTypeCs .}} {{$.FieldName .}} { get; set; }
+        [JsonProperty("{{.FieldName}}")]
+        public {{.FieldTypeCs}} {{.FieldName}} { get; set; }
 {{- end}}
     }
 

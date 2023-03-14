@@ -7,6 +7,7 @@ const Version = "2.0.0"   // 版本字串, 遵循'大版本.小版本.修正版�
 const BarWidth = 40       // 進度條寬度
 const MaxExcel = 999999   // 最大開啟excel數量
 const MaxSheet = 999999   // 最大開啟sheet數量
+const OutputCol = 1       // 輸出欄號
 
 /* 路徑名 */
 
@@ -53,8 +54,6 @@ const TypeDoubleGo = "float64"     // 類型字串: 64位元浮點數(go)
 const TypeStringCs = "string"      // 類型字串: 字串(cs)
 const TypeStringGo = "string"      // 類型字串: 字串(go)
 const TypeArray = "[]"             // 類型字串: 陣列
-const TypeOptional = "optional"    // 類型字串: optional(proto)
-const TypeRepeated = "repeated"    // 類型字串: repeated(proto)
 
 // Keyword 關鍵字列表
 var Keyword = []string{

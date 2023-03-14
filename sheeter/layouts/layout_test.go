@@ -104,9 +104,9 @@ func (this *SuiteLayout) TestLayout() {
 
 func (this *SuiteLayout) TestPkey() {
 	target := this.target()
-	assert.Nil(this.T(), target.Pkey())
 	assert.Nil(this.T(), target.Add("a", "name1", "note1", &fields.Pkey{}))
-	assert.NotNil(this.T(), target.Pkey())
+	assert.NotNil(this.T(), target.Pkey("a"))
+	assert.Nil(this.T(), target.Pkey("b"))
 }
 
 func (this *SuiteLayout) target() *Layout {

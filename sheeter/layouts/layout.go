@@ -104,6 +104,10 @@ func (this *Layout) Layout(tag string) (result []*Data) {
 }
 
 // Pkey 取得主要索引資料
-func (this *Layout) Pkey() *Data {
-	return this.pkey
+func (this *Layout) Pkey(tag string) *Data {
+	if this.pkey != nil && utils.CheckTag(tag, this.pkey.Tag) {
+		return this.pkey
+	} // if
+
+	return nil
 }

@@ -59,8 +59,8 @@ func Initialize(config *Config) (result []*InitializeData, err []error) {
 }
 
 // searchExcel 搜尋excel
-func searchExcel(path string, result chan any) error {
-	if err := filepath.Walk(path, func(path string, info fs.FileInfo, err error) error {
+func searchExcel(input string, result chan any) error {
+	if err := filepath.Walk(input, func(path string, info fs.FileInfo, err error) error {
 		if err != nil {
 			return nil
 		} // if
@@ -87,10 +87,10 @@ func searchExcel(path string, result chan any) error {
 }
 
 // searchSheet 搜尋sheet
-func searchSheet(file string, result chan any) error {
+func searchSheet(input string, result chan any) error {
 	excel := &excels.Excel{}
 
-	if err := excel.Open(file); err != nil {
+	if err := excel.Open(input); err != nil {
 		return fmt.Errorf("search sheet: %w", err)
 	} // if
 
@@ -108,7 +108,7 @@ func searchSheet(file string, result chan any) error {
 		result <- &InitializeData{
 			Excel:     excel,
 			Sheet:     sheet,
-			ExcelName: filepath.Base(file),
+			ExcelName: filepath.Base(input),
 			SheetName: itor,
 		}
 	} // for

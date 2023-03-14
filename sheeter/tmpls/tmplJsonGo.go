@@ -12,7 +12,7 @@ import (
 // {{$.StructName}} {{$.StructNote}}
 type {{$.StructName}} struct {
 {{- range $.Fields}}
-	{{$.FieldName .}} {{$.FieldTypeGo .}} ` + "`json:\"{{$.FieldName .}}\"`" + ` // {{$.FieldNote .}}
+	{{.FieldName}} {{.FieldTypeGo}} ` + "`json:\"{{.FieldName}}\"`" + ` // {{.FieldNote}}
 {{- end}}
 }
 
