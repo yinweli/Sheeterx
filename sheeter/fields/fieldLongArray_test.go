@@ -28,7 +28,7 @@ func (this *SuiteLongArray) TearDownSuite() {
 }
 
 func (this *SuiteLongArray) TestField() {
-	target := this.target()
+	target := &LongArray{}
 	assert.Equal(this.T(), []string{"longArray", "[]long", "long[]"}, target.Field())
 	assert.Equal(this.T(), false, target.IsPkey())
 	assert.Equal(this.T(), sheeter.TypeLongCs+sheeter.TypeArray, target.ToTypeCs())
@@ -36,7 +36,7 @@ func (this *SuiteLongArray) TestField() {
 }
 
 func (this *SuiteLongArray) TestToJsonValue() {
-	target := this.target()
+	target := &LongArray{}
 
 	result, err := target.ToJsonValue("123,456,789")
 	assert.Nil(this.T(), err)
@@ -47,8 +47,4 @@ func (this *SuiteLongArray) TestToJsonValue() {
 
 	_, err = target.ToJsonValue(this.Unknown)
 	assert.NotNil(this.T(), err)
-}
-
-func (this *SuiteLongArray) target() *LongArray {
-	return &LongArray{}
 }

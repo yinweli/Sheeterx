@@ -34,20 +34,20 @@ func (this *SuiteExcel) TearDownSuite() {
 }
 
 func (this *SuiteExcel) TestOpen() {
-	target := this.target()
+	target := &Excel{}
 	assert.Nil(this.T(), target.Open(this.excelSuccess))
 	assert.True(this.T(), target.IsOpen())
 	target.Close()
 	assert.False(this.T(), target.IsOpen())
 
-	target = this.target()
+	target = &Excel{}
 	assert.NotNil(this.T(), target.Open(this.Unknown))
 
 	CloseAll()
 }
 
 func (this *SuiteExcel) TestGet() {
-	target := this.target()
+	target := &Excel{}
 	assert.Nil(this.T(), target.Open(this.excelSuccess))
 
 	sheet, err := target.Get(this.sheet1)
@@ -67,7 +67,7 @@ func (this *SuiteExcel) TestGet() {
 }
 
 func (this *SuiteExcel) TestGetLine() {
-	target := this.target()
+	target := &Excel{}
 	assert.Nil(this.T(), target.Open(this.excelSuccess))
 
 	line, err := target.GetLine(this.sheet1, 1, 2, 3)
@@ -96,7 +96,7 @@ func (this *SuiteExcel) TestGetLine() {
 }
 
 func (this *SuiteExcel) TestSheets() {
-	target := this.target()
+	target := &Excel{}
 	assert.Equal(this.T(), []string{}, target.Sheets())
 	assert.Nil(this.T(), target.Open(this.excelSuccess))
 	assert.Equal(this.T(), []string{this.sheet1, this.sheet2}, target.Sheets())
@@ -104,7 +104,7 @@ func (this *SuiteExcel) TestSheets() {
 }
 
 func (this *SuiteExcel) TestExist() {
-	target := this.target()
+	target := &Excel{}
 	assert.Nil(this.T(), target.Open(this.excelSuccess))
 	assert.True(this.T(), target.Exist(this.sheet1))
 	assert.True(this.T(), target.Exist(this.sheet2))
@@ -113,7 +113,7 @@ func (this *SuiteExcel) TestExist() {
 }
 
 func (this *SuiteExcel) TestSheet() {
-	target := this.target()
+	target := &Excel{}
 	assert.Nil(this.T(), target.Open(this.excelSuccess))
 
 	sheet, err := target.Get(this.sheet1)
@@ -165,8 +165,4 @@ func (this *SuiteExcel) TestColumnToIndex() {
 	assert.Panics(this.T(), func() { columnToIndex("") })
 	assert.Panics(this.T(), func() { columnToIndex("0") })
 	assert.Panics(this.T(), func() { columnToIndex("?") })
-}
-
-func (this *SuiteExcel) target() *Excel {
-	return &Excel{}
 }

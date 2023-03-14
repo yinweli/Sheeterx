@@ -29,7 +29,10 @@ func (this *SuiteNamed) TearDownSuite() {
 }
 
 func (this *SuiteNamed) TestName() {
-	target := this.target()
+	target := &Named{
+		ExcelName: "excel",
+		SheetName: "sheet",
+	}
 	assert.Equal(this.T(), sheeter.AppName, target.AppName())
 	assert.Equal(this.T(), sheeter.Namespace, target.Namespace())
 	assert.Equal(this.T(), "ExcelSheet", target.StructName())
@@ -45,11 +48,4 @@ func (this *SuiteNamed) TestName() {
 	assert.Equal(this.T(), filepath.Join(sheeter.GoPath, "sheeter.go"), target.SheeterPathGo())
 	assert.Equal(this.T(), "TestString", target.FirstUpper("testString"))
 	assert.Equal(this.T(), "testString", target.FirstLower("TestString"))
-}
-
-func (this *SuiteNamed) target() *Named {
-	return &Named{
-		ExcelName: "excel",
-		SheetName: "sheet",
-	}
 }

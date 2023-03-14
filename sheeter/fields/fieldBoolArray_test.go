@@ -28,7 +28,7 @@ func (this *SuiteBoolArray) TearDownSuite() {
 }
 
 func (this *SuiteBoolArray) TestField() {
-	target := this.target()
+	target := &BoolArray{}
 	assert.Equal(this.T(), []string{"boolArray", "[]bool", "bool[]"}, target.Field())
 	assert.Equal(this.T(), false, target.IsPkey())
 	assert.Equal(this.T(), sheeter.TypeBoolCs+sheeter.TypeArray, target.ToTypeCs())
@@ -36,7 +36,7 @@ func (this *SuiteBoolArray) TestField() {
 }
 
 func (this *SuiteBoolArray) TestToJsonValue() {
-	target := this.target()
+	target := &BoolArray{}
 
 	result, err := target.ToJsonValue("true,false,true,false,true")
 	assert.Nil(this.T(), err)
@@ -47,8 +47,4 @@ func (this *SuiteBoolArray) TestToJsonValue() {
 
 	_, err = target.ToJsonValue(this.Unknown)
 	assert.NotNil(this.T(), err)
-}
-
-func (this *SuiteBoolArray) target() *BoolArray {
-	return &BoolArray{}
 }

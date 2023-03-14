@@ -28,7 +28,7 @@ func (this *SuiteStringArray) TearDownSuite() {
 }
 
 func (this *SuiteStringArray) TestField() {
-	target := this.target()
+	target := &StringArray{}
 	assert.Equal(this.T(), []string{"stringArray", "[]string", "string[]"}, target.Field())
 	assert.Equal(this.T(), false, target.IsPkey())
 	assert.Equal(this.T(), sheeter.TypeStringCs+sheeter.TypeArray, target.ToTypeCs())
@@ -36,13 +36,9 @@ func (this *SuiteStringArray) TestField() {
 }
 
 func (this *SuiteStringArray) TestToJsonValue() {
-	target := this.target()
+	target := &StringArray{}
 
 	result, err := target.ToJsonValue("ball,book,pack")
 	assert.Nil(this.T(), err)
 	assert.Equal(this.T(), []string{"ball", "book", "pack"}, result)
-}
-
-func (this *SuiteStringArray) target() *StringArray {
-	return &StringArray{}
 }

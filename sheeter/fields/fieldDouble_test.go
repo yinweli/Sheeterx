@@ -28,7 +28,7 @@ func (this *SuiteDouble) TearDownSuite() {
 }
 
 func (this *SuiteDouble) TestField() {
-	target := this.target()
+	target := &Double{}
 	assert.Equal(this.T(), []string{"double"}, target.Field())
 	assert.Equal(this.T(), false, target.IsPkey())
 	assert.Equal(this.T(), sheeter.TypeDoubleCs, target.ToTypeCs())
@@ -36,7 +36,7 @@ func (this *SuiteDouble) TestField() {
 }
 
 func (this *SuiteDouble) TestToJsonValue() {
-	target := this.target()
+	target := &Double{}
 
 	result, err := target.ToJsonValue("0.123456")
 	assert.Nil(this.T(), err)
@@ -47,8 +47,4 @@ func (this *SuiteDouble) TestToJsonValue() {
 
 	_, err = target.ToJsonValue(this.Unknown)
 	assert.NotNil(this.T(), err)
-}
-
-func (this *SuiteDouble) target() *Double {
-	return &Double{}
 }

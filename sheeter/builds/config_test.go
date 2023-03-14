@@ -92,48 +92,7 @@ func (this *SuiteConfig) TestPath() {
 }
 
 func (this *SuiteConfig) TestCheck() {
-	target := this.target()
-	assert.Nil(this.T(), target.Check())
-
-	target = this.target()
-	target.Global.LineOfTag = 0
-	assert.NotNil(this.T(), target.Check())
-
-	target = this.target()
-	target.Global.LineOfName = 0
-	assert.NotNil(this.T(), target.Check())
-
-	target = this.target()
-	target.Global.LineOfNote = 0
-	assert.NotNil(this.T(), target.Check())
-
-	target = this.target()
-	target.Global.LineOfField = 0
-	assert.NotNil(this.T(), target.Check())
-
-	target = this.target()
-	target.Global.LineOfData = 0
-	assert.NotNil(this.T(), target.Check())
-
-	target = this.target()
-	target.Global.LineOfTag = 999
-	assert.NotNil(this.T(), target.Check())
-
-	target = this.target()
-	target.Global.LineOfName = 999
-	assert.NotNil(this.T(), target.Check())
-
-	target = this.target()
-	target.Global.LineOfNote = 999
-	assert.NotNil(this.T(), target.Check())
-
-	target = this.target()
-	target.Global.LineOfField = 999
-	assert.NotNil(this.T(), target.Check())
-}
-
-func (this *SuiteConfig) target() *Config {
-	return &Config{
+	original := Config{
 		Global: Global{
 			LineOfTag:   1,
 			LineOfName:  2,
@@ -142,4 +101,43 @@ func (this *SuiteConfig) target() *Config {
 			LineOfData:  5,
 		},
 	}
+
+	target := original
+	assert.Nil(this.T(), target.Check())
+
+	target = original
+	target.Global.LineOfTag = 0
+	assert.NotNil(this.T(), target.Check())
+
+	target = original
+	target.Global.LineOfName = 0
+	assert.NotNil(this.T(), target.Check())
+
+	target = original
+	target.Global.LineOfNote = 0
+	assert.NotNil(this.T(), target.Check())
+
+	target = original
+	target.Global.LineOfField = 0
+	assert.NotNil(this.T(), target.Check())
+
+	target = original
+	target.Global.LineOfData = 0
+	assert.NotNil(this.T(), target.Check())
+
+	target = original
+	target.Global.LineOfTag = 999
+	assert.NotNil(this.T(), target.Check())
+
+	target = original
+	target.Global.LineOfName = 999
+	assert.NotNil(this.T(), target.Check())
+
+	target = original
+	target.Global.LineOfNote = 999
+	assert.NotNil(this.T(), target.Check())
+
+	target = original
+	target.Global.LineOfField = 999
+	assert.NotNil(this.T(), target.Check())
 }

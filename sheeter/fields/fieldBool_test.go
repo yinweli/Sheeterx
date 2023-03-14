@@ -28,7 +28,7 @@ func (this *SuiteBool) TearDownSuite() {
 }
 
 func (this *SuiteBool) TestField() {
-	target := this.target()
+	target := &Bool{}
 	assert.Equal(this.T(), []string{"bool"}, target.Field())
 	assert.Equal(this.T(), false, target.IsPkey())
 	assert.Equal(this.T(), sheeter.TypeBoolCs, target.ToTypeCs())
@@ -36,7 +36,7 @@ func (this *SuiteBool) TestField() {
 }
 
 func (this *SuiteBool) TestToJsonValue() {
-	target := this.target()
+	target := &Bool{}
 
 	result, err := target.ToJsonValue("true")
 	assert.Nil(this.T(), err)
@@ -51,8 +51,4 @@ func (this *SuiteBool) TestToJsonValue() {
 
 	_, err = target.ToJsonValue(this.Unknown)
 	assert.NotNil(this.T(), err)
-}
-
-func (this *SuiteBool) target() *Bool {
-	return &Bool{}
 }

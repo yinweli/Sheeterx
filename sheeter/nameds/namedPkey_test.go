@@ -29,13 +29,9 @@ func (this *SuitePkey) TearDownSuite() {
 }
 
 func (this *SuitePkey) TestPkey() {
-	target := this.target()
-	assert.Equal(this.T(), sheeter.TypePkeyCs, target.PkeyCs())
-	assert.Equal(this.T(), sheeter.TypePkeyGo, target.PkeyGo())
-}
-
-func (this *SuitePkey) target() *Pkey {
-	return &Pkey{
+	target := &Pkey{
 		Pkey: &fields.Pkey{},
 	}
+	assert.Equal(this.T(), sheeter.TypePkeyCs, target.PkeyCs())
+	assert.Equal(this.T(), sheeter.TypePkeyGo, target.PkeyGo())
 }

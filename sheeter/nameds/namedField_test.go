@@ -30,15 +30,7 @@ func (this *SuiteField) TearDownSuite() {
 }
 
 func (this *SuiteField) TestName() {
-	target := this.target()
-	assert.Equal(this.T(), "Name", target.FieldName())
-	assert.Equal(this.T(), "note", target.FieldNote())
-	assert.Equal(this.T(), sheeter.TypePkeyCs, target.FieldTypeCs())
-	assert.Equal(this.T(), sheeter.TypePkeyGo, target.FieldTypeGo())
-}
-
-func (this *SuiteField) target() *Field {
-	return &Field{
+	target := &Field{
 		Data: &layouts.Data{
 			Tag:   "",
 			Name:  "name",
@@ -46,4 +38,8 @@ func (this *SuiteField) target() *Field {
 			Field: &fields.Pkey{},
 		},
 	}
+	assert.Equal(this.T(), "Name", target.FieldName())
+	assert.Equal(this.T(), "note", target.FieldNote())
+	assert.Equal(this.T(), sheeter.TypePkeyCs, target.FieldTypeCs())
+	assert.Equal(this.T(), sheeter.TypePkeyGo, target.FieldTypeGo())
 }

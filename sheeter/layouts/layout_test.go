@@ -32,7 +32,7 @@ func (this *SuiteLayout) TestNewLayout() {
 }
 
 func (this *SuiteLayout) TestAdd() {
-	target := this.target()
+	target := NewLayout()
 	assert.Nil(this.T(), target.Add("", "name1", "note1", &fields.Pkey{}))
 	assert.Nil(this.T(), target.Add("", "name2", "note2", &fields.Int{}))
 	assert.NotNil(this.T(), target.Add("", "name2", "note2", &fields.Int{}))
@@ -43,7 +43,7 @@ func (this *SuiteLayout) TestAdd() {
 }
 
 func (this *SuiteLayout) TestPack() {
-	target := this.target()
+	target := NewLayout()
 	assert.Nil(this.T(), target.Add("123", "name1", "note1", &fields.Pkey{}))
 	assert.Nil(this.T(), target.Add("12", "name2", "note2", &fields.Int{}))
 	assert.Nil(this.T(), target.Add("12", "name3", "note3", &fields.IntArray{}))
@@ -89,7 +89,7 @@ func (this *SuiteLayout) TestPack() {
 }
 
 func (this *SuiteLayout) TestLayout() {
-	target := this.target()
+	target := NewLayout()
 	assert.Nil(this.T(), target.Add("123", "name1", "note1", &fields.Pkey{}))
 	assert.Nil(this.T(), target.Add("12", "name2", "note2", &fields.Int{}))
 	assert.Nil(this.T(), target.Add("12", "name3", "note3", &fields.IntArray{}))
@@ -103,12 +103,8 @@ func (this *SuiteLayout) TestLayout() {
 }
 
 func (this *SuiteLayout) TestPkey() {
-	target := this.target()
+	target := NewLayout()
 	assert.Nil(this.T(), target.Add("a", "name1", "note1", &fields.Pkey{}))
 	assert.NotNil(this.T(), target.Pkey("a"))
 	assert.Nil(this.T(), target.Pkey("b"))
-}
-
-func (this *SuiteLayout) target() *Layout {
-	return NewLayout()
 }

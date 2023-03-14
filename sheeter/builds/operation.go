@@ -63,8 +63,8 @@ func parseLayout(input *OperationData, _ chan any) error {
 	} // if
 
 	layout := layouts.NewLayout()
-	lineTag := line[input.LineOfTag][sheeter.OutputCol:] // 尋訪時, 以標籤行為主; 第sheeter.OutputCol欄之後才是資料欄, 因此在前面過濾掉
-	lineName := line[input.LineOfName][sheeter.OutputCol:]
+	lineTag := line[input.LineOfTag][sheeter.OutputCol:]   // 尋訪時, 以標籤行為主
+	lineName := line[input.LineOfName][sheeter.OutputCol:] // 第sheeter.OutputCol欄之後才是資料欄, 因此在前面過濾掉
 	lineNote := line[input.LineOfNote][sheeter.OutputCol:]
 	lineField := line[input.LineOfField][sheeter.OutputCol:]
 

@@ -28,7 +28,7 @@ func (this *SuiteInt) TearDownSuite() {
 }
 
 func (this *SuiteInt) TestField() {
-	target := this.target()
+	target := &Int{}
 	assert.Equal(this.T(), []string{"int"}, target.Field())
 	assert.Equal(this.T(), false, target.IsPkey())
 	assert.Equal(this.T(), sheeter.TypeIntCs, target.ToTypeCs())
@@ -36,7 +36,7 @@ func (this *SuiteInt) TestField() {
 }
 
 func (this *SuiteInt) TestToJsonValue() {
-	target := this.target()
+	target := &Int{}
 
 	result, err := target.ToJsonValue("123456789")
 	assert.Nil(this.T(), err)
@@ -47,8 +47,4 @@ func (this *SuiteInt) TestToJsonValue() {
 
 	_, err = target.ToJsonValue(this.Unknown)
 	assert.NotNil(this.T(), err)
-}
-
-func (this *SuiteInt) target() *Int {
-	return &Int{}
 }
