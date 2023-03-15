@@ -48,7 +48,7 @@ func (this *SuiteJsonPack) TearDownSuite() {
 }
 
 func (this *SuiteJsonPack) TestJsonPack() {
-	byte1, _ := utils.JsonMarshal(map[string]interface{}{
+	expected1, _ := utils.JsonMarshal(map[string]interface{}{
 		"1": map[string]interface{}{
 			"pkey":  int32(1),
 			"name1": int32(1),
@@ -71,7 +71,7 @@ func (this *SuiteJsonPack) TestJsonPack() {
 			"name4": []string{"c", "d", "a", "b"},
 		},
 	})
-	byte2, _ := utils.JsonMarshal(map[string]interface{}{
+	expected2, _ := utils.JsonMarshal(map[string]interface{}{
 		"1": map[string]interface{}{
 			"pkey":  int32(1),
 			"name1": int32(1),
@@ -88,7 +88,7 @@ func (this *SuiteJsonPack) TestJsonPack() {
 			"name2": []int32{30, 31, 32},
 		},
 	})
-	byte3, _ := utils.JsonMarshal(map[string]interface{}{
+	expected3, _ := utils.JsonMarshal(map[string]interface{}{
 		"1": map[string]interface{}{
 			"pkey":  int32(1),
 			"name3": "a",
@@ -109,17 +109,17 @@ func (this *SuiteJsonPack) TestJsonPack() {
 	sheet, layout := this.prepare(this.excel, this.sheetSuccess)
 	result, err := JsonPack("1", this.lintOfData, sheet, layout)
 	assert.Nil(this.T(), err)
-	assert.Equal(this.T(), string(byte1), string(result))
+	assert.Equal(this.T(), string(expected1), string(result))
 
 	sheet, layout = this.prepare(this.excel, this.sheetSuccess)
 	result, err = JsonPack("2", this.lintOfData, sheet, layout)
 	assert.Nil(this.T(), err)
-	assert.Equal(this.T(), string(byte2), string(result))
+	assert.Equal(this.T(), string(expected2), string(result))
 
 	sheet, layout = this.prepare(this.excel, this.sheetSuccess)
 	result, err = JsonPack("3", this.lintOfData, sheet, layout)
 	assert.Nil(this.T(), err)
-	assert.Equal(this.T(), string(byte3), string(result))
+	assert.Equal(this.T(), string(expected3), string(result))
 
 	sheet, layout = this.prepare(this.excel, this.sheetFailed)
 	_, err = JsonPack("1", this.lintOfData, sheet, layout)
@@ -133,10 +133,8 @@ func (this *SuiteJsonPack) TestJsonPack() {
 func (this *SuiteJsonPack) prepare(excelName, sheetName string) (sheet *excels.Sheet, layout *Layout) {
 	excel := &excels.Excel{}
 	assert.Nil(this.T(), excel.Open(excelName))
-
 	sheet, err := excel.Get(sheetName)
 	assert.Nil(this.T(), err)
-
 	line, err := excel.GetLine(
 		sheetName,
 		this.lineOfTag,

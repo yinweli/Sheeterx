@@ -7,6 +7,7 @@ import (
 	"github.com/yinweli/Sheeterx/sheeter/layouts"
 	"github.com/yinweli/Sheeterx/sheeter/nameds"
 	"github.com/yinweli/Sheeterx/sheeter/pipelines"
+	"github.com/yinweli/Sheeterx/sheeter/utils"
 )
 
 // OperationData 作業資料
@@ -36,6 +37,9 @@ func Operation(config *Config, input []*InitializeData) (result []*OperationData
 
 	_, err = pipelines.Pipeline[*OperationData]("search excel", result, []pipelines.PipelineFunc[*OperationData]{
 		parseLayout,
+		generateData,
+		generateReaderCs,
+		generateReaderGo,
 	})
 
 	if len(err) > 0 {
@@ -91,5 +95,25 @@ func parseLayout(input *OperationData, _ chan any) error {
 
 // generateData 產生資料檔案
 func generateData(input *OperationData, _ chan any) error {
+	json, err := layouts.JsonPack(input.Tag, input.LineOfData, input.Sheet, input.Layout)
+
+	if err != nil {
+		return fmt.Errorf("generate data: %v#%v: %w", input.ExcelName, input.SheetName, err)
+	} // if
+
+	if err := utils.WriteFile(input.DataPath(), json); err != nil {
+		return fmt.Errorf("generate data: %v#%v: %w", input.ExcelName, input.SheetName, err)
+	} // if
+
+	return nil
+}
+
+// generateReaderCs 產生cs結構程式碼
+func generateReaderCs(input *OperationData, _ chan any) error {
+	return nil
+}
+
+// generateReaderGo 產生go結構程式碼
+func generateReaderGo(input *OperationData, _ chan any) error {
 	return nil
 }

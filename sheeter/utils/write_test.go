@@ -43,5 +43,17 @@ func (this *SuiteWrite) TestWriteFile() {
 	data := []byte("this is a string")
 
 	assert.Nil(this.T(), WriteFile(path, data))
-	this.CompareFile(this.T(), path, data)
+	this.AssertCompareFile(this.T(), path, data)
+}
+
+func (this *SuiteWrite) TestWriteTmpl() {
+	path := filepath.Join("write", "write.tmpl")
+	contentReal := "{{$.Value}}"
+	contentFake := "{{{$.Value}}"
+
+	assert.Nil(this.T(), WriteTmpl(path, contentReal, map[string]string{"Value": "Value"}))
+	this.AssertCompareFile(this.T(), path, []byte("Value"))
+
+	assert.NotNil(this.T(), WriteTmpl(path, contentFake, nil))
+	assert.NotNil(this.T(), WriteTmpl(path, contentReal, "nothing!"))
 }

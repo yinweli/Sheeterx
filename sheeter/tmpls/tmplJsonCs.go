@@ -48,11 +48,11 @@ namespace {{$.Namespace | $.FirstUpper}}
             } // try
             catch
             {
-                return "from data failed: deserialize failed";
+                return "from data: deserialize failed";
             } // catch
 
             if (Data == null)
-                return "from data failed: deserialize failed";
+                return "from data: deserialize failed";
 
             return string.Empty;
         }
@@ -70,16 +70,16 @@ namespace {{$.Namespace | $.FirstUpper}}
             } // try
             catch
             {
-                return "merge data failed: deserialize failed";
+                return "merge data: deserialize failed";
             } // catch
 
             if (tmpl == null)
-                return "merge data failed: deserialize failed";
+                return "merge data: deserialize failed";
 
             foreach (var itor in tmpl)
             {
                 if (Data.ContainsKey(itor.Key))
-                    return "merge data failed: key duplicate";
+                    return "merge data: key duplicate";
 
                 Data[itor.Key] = itor.Value;
             } // for

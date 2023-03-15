@@ -13,7 +13,7 @@ func StrToBool(input string) (result bool, err error) {
 	result, err = strconv.ParseBool(input)
 
 	if err != nil {
-		return false, fmt.Errorf("str to bool failed: %w", err)
+		return false, fmt.Errorf("str to bool: %w", err)
 	} // if
 
 	return result, nil
@@ -39,7 +39,7 @@ func StrToInt32(input string) (result int32, err error) {
 	result64, err := strconv.ParseInt(input, 10, 32)
 
 	if err != nil {
-		return 0, fmt.Errorf("str to int failed: %w", err)
+		return 0, fmt.Errorf("str to int32: %w", err)
 	} // if
 
 	return int32(result64), nil
@@ -65,7 +65,7 @@ func StrToInt64(input string) (result int64, err error) {
 	result, err = strconv.ParseInt(input, 10, 64)
 
 	if err != nil {
-		return 0, fmt.Errorf("str to int failed: %w", err)
+		return 0, fmt.Errorf("str to int64: %w", err)
 	} // if
 
 	return result, nil
@@ -91,7 +91,7 @@ func StrToFloat32(input string) (result float32, err error) {
 	result64, err := strconv.ParseFloat(input, 32)
 
 	if err != nil {
-		return 0, fmt.Errorf("str to float failed: %w", err)
+		return 0, fmt.Errorf("str to float32: %w", err)
 	} // if
 
 	return float32(result64), nil
@@ -117,7 +117,7 @@ func StrToFloat64(input string) (result float64, err error) {
 	result64, err := strconv.ParseFloat(input, 64)
 
 	if err != nil {
-		return 0, fmt.Errorf("str to float failed: %w", err)
+		return 0, fmt.Errorf("str to float64: %w", err)
 	} // if
 
 	return result64, nil

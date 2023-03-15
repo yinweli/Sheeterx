@@ -31,7 +31,7 @@ func (this *{{$.ReaderName}}) FromData(data []byte) error {
 	this.Data = map[{{$.PkeyGo}}]*{{$.StructName}}{}
 
 	if err := json.Unmarshal(data, &this.Data); err != nil {
-		return fmt.Errorf("from data failed: %w", err)
+		return fmt.Errorf("from data: %w", err)
 	} // if
 
 	return nil
@@ -42,7 +42,7 @@ func (this *{{$.ReaderName}}) MergeData(data []byte) error {
 	tmpl := map[{{$.PkeyGo}}]*{{$.StructName}}{}
 
 	if err := json.Unmarshal(data, &tmpl); err != nil {
-		return fmt.Errorf("merge data failed: %w", err)
+		return fmt.Errorf("merge data: %w", err)
 	} // if
 
 	if this.Data == nil {
@@ -51,7 +51,7 @@ func (this *{{$.ReaderName}}) MergeData(data []byte) error {
 
 	for k, v := range tmpl {
 		if _, ok := this.Data[k]; ok {
-			return fmt.Errorf("merge data failed: key duplicate")
+			return fmt.Errorf("merge data: key duplicate")
 		} // if
 
 		this.Data[k] = v
