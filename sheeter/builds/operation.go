@@ -88,3 +88,8 @@ func parseLayout(input *OperationData, _ chan any) error {
 	input.Layout = layout
 	return nil
 }
+
+// generateData 產生資料檔案
+func generateData(input *OperationData, _ chan any) error {
+	return nil
+}

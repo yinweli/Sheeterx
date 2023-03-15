@@ -30,5 +30,5 @@ func (this *Skey) ToTypeGo() string {
 
 // ToJsonValue 轉換為json值
 func (this *Skey) ToJsonValue(input string) (result interface{}, err error) {
-	return input, nil // pkey都以字串輸出, 方便json轉換
+	return input, nil
 }

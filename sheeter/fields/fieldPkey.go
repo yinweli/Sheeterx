@@ -1,7 +1,10 @@
 package fields
 
 import (
+	"fmt"
+
 	"github.com/yinweli/Sheeterx/sheeter"
+	"github.com/yinweli/Sheeterx/sheeter/utils"
 )
 
 // Pkey 主要整數索引
@@ -30,5 +33,11 @@ func (this *Pkey) ToTypeGo() string {
 
 // ToJsonValue 轉換為json值
 func (this *Pkey) ToJsonValue(input string) (result interface{}, err error) {
-	return input, nil // pkey都以字串輸出, 方便json轉換
+	result, err = utils.StrToInt32(input)
+
+	if err != nil {
+		return nil, fmt.Errorf("pkey to json value: %w", err)
+	} // if
+
+	return result, nil
 }

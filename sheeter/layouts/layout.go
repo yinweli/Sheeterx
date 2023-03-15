@@ -39,6 +39,10 @@ func (this *Layout) Set(lineTag, lineName, lineNote, lineField []string) error {
 			continue
 		} // if
 
+		if utils.CheckIgnore(itor) { // 跳過忽略欄
+			continue
+		} // if
+
 		if itor == "" { // 一旦遇到空欄位, 就結束布局
 			break
 		} // if
