@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/yinweli/Sheeterx/sheeter/fields"
+	"github.com/yinweli/Sheeterx/sheeter"
 	"github.com/yinweli/Sheeterx/testdata"
 )
 
@@ -31,26 +31,33 @@ func (this *SuiteLayout) TestNewLayout() {
 	assert.NotNil(this.T(), NewLayout())
 }
 
-func (this *SuiteLayout) TestAdd() {
+func (this *SuiteLayout) TestSet() {
 	target := NewLayout()
-	assert.Nil(this.T(), target.Add("", "name1", "note1", &fields.Pkey{}))
-	assert.Nil(this.T(), target.Add("", "name2", "note2", &fields.Int{}))
-	assert.NotNil(this.T(), target.Add("", "name2", "note2", &fields.Int{}))
-	assert.NotNil(this.T(), target.Add("", "name3", "note3", &fields.Pkey{}))
-	assert.NotNil(this.T(), target.Add("", "name4", "note4", nil))
-	assert.NotNil(this.T(), target.Add("", "name@", "note5", &fields.Int{}))
-	assert.NotNil(this.T(), target.Add("", "", "note6", &fields.Int{}))
+	assert.Nil(this.T(), target.Set(
+		[]string{"", "123", "12", "12", "13", "13"},
+		[]string{"", "name1", "name2", "name3", "name4", "name5"},
+		[]string{"", "note1", "note2", "note3", "note4", "note5"},
+		[]string{"", "pkey", "int", "[]int", "string", "[]string"}))
+
+	target = NewLayout()
+	assert.NotNil(this.T(), target.Set(
+		[]string{"", "123", "12", "12", "13", "13"},
+		[]string{"", "name1", "name2", "name3", "name4", "name5"},
+		[]string{"", "note1", "note2", "note3", "note4", "note5"},
+		[]string{"", "@", "int", "[]int", "string", "[]string"}))
 }
 
 func (this *SuiteLayout) TestPack() {
 	target := NewLayout()
-	assert.Nil(this.T(), target.Add("123", "name1", "note1", &fields.Pkey{}))
-	assert.Nil(this.T(), target.Add("12", "name2", "note2", &fields.Int{}))
-	assert.Nil(this.T(), target.Add("12", "name3", "note3", &fields.IntArray{}))
-	assert.Nil(this.T(), target.Add("13", "name4", "note4", &fields.String{}))
-	assert.Nil(this.T(), target.Add("13", "name5", "note5", &fields.StringArray{}))
+	assert.Nil(this.T(), target.Set(
+		[]string{"", "123", "12", "12", "13", "13"},
+		[]string{"", "name1", "name2", "name3", "name4", "name5"},
+		[]string{"", "note1", "note2", "note3", "note4", "note5"},
+		[]string{"", "pkey", "int", "[]int", "string", "[]string"}))
 
-	data := []string{"1", "2", "1,2,3", "a", "a,b,c"}
+	data := []string{"", "1", "2", "1,2,3", "a", "a,b,c"}
+	dataIgnore := []string{sheeter.TokenIgnore, "1", "2", "1,2,3", "a", "a,b,c"}
+	dataInvalid := []string{"", "1", "@", "1,2,3", "a", "a,b,c"}
 	actual1 := map[string]interface{}{
 		"name1": "1",
 		"name2": int32(2),
@@ -84,17 +91,22 @@ func (this *SuiteLayout) TestPack() {
 	assert.Equal(this.T(), "1", pkey)
 	assert.Equal(this.T(), actual3, result)
 
-	_, _, err = target.Pack("1", []string{"1", "@", "1,2,3", "a", "a,b,c"})
+	result, pkey, err = target.Pack("1", dataIgnore)
+	assert.Nil(this.T(), err)
+	assert.Nil(this.T(), pkey)
+	assert.Nil(this.T(), result)
+
+	_, _, err = target.Pack("1", dataInvalid)
 	assert.NotNil(this.T(), err)
 }
 
 func (this *SuiteLayout) TestLayout() {
 	target := NewLayout()
-	assert.Nil(this.T(), target.Add("123", "name1", "note1", &fields.Pkey{}))
-	assert.Nil(this.T(), target.Add("12", "name2", "note2", &fields.Int{}))
-	assert.Nil(this.T(), target.Add("12", "name3", "note3", &fields.IntArray{}))
-	assert.Nil(this.T(), target.Add("13", "name4", "note4", &fields.String{}))
-	assert.Nil(this.T(), target.Add("1", "name5", "note5", &fields.StringArray{}))
+	assert.Nil(this.T(), target.Set(
+		[]string{"", "123", "12", "12", "13", "1"},
+		[]string{"", "name1", "name2", "name3", "name4", "name5"},
+		[]string{"", "note1", "note2", "note3", "note4", "note5"},
+		[]string{"", "pkey", "int", "[]int", "string", "[]string"}))
 
 	assert.Len(this.T(), target.Layout("1"), 5)
 	assert.Len(this.T(), target.Layout("2"), 3)
@@ -104,7 +116,23 @@ func (this *SuiteLayout) TestLayout() {
 
 func (this *SuiteLayout) TestPkey() {
 	target := NewLayout()
-	assert.Nil(this.T(), target.Add("a", "name1", "note1", &fields.Pkey{}))
-	assert.NotNil(this.T(), target.Pkey("a"))
-	assert.Nil(this.T(), target.Pkey("b"))
+	assert.Nil(this.T(), target.Set(
+		[]string{"", "1"},
+		[]string{"", "name1"},
+		[]string{"", "note1"},
+		[]string{"", "pkey"}))
+
+	assert.NotNil(this.T(), target.Pkey("1"))
+	assert.Nil(this.T(), target.Pkey("2"))
+}
+
+func (this *SuiteLayout) TestAdd() {
+	target := NewLayout()
+	assert.Nil(this.T(), target.add(0, "", "name1", "note1", "pkey"))
+	assert.Nil(this.T(), target.add(0, "", "name2", "note2", "int"))
+	assert.NotNil(this.T(), target.add(0, "", "name2", "note2", "int"))
+	assert.NotNil(this.T(), target.add(0, "", "name3", "note3", "pkey"))
+	assert.NotNil(this.T(), target.add(0, "", "name4", "note4", "@"))
+	assert.NotNil(this.T(), target.add(0, "", "name@", "note5", "int"))
+	assert.NotNil(this.T(), target.add(0, "", "", "note6", "int"))
 }

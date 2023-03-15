@@ -3,13 +3,10 @@ package builds
 import (
 	"fmt"
 
-	"github.com/yinweli/Sheeterx/sheeter"
 	"github.com/yinweli/Sheeterx/sheeter/excels"
-	"github.com/yinweli/Sheeterx/sheeter/fields"
 	"github.com/yinweli/Sheeterx/sheeter/layouts"
 	"github.com/yinweli/Sheeterx/sheeter/nameds"
 	"github.com/yinweli/Sheeterx/sheeter/pipelines"
-	"github.com/yinweli/Sheeterx/sheeter/utils"
 )
 
 // OperationData 作業資料
@@ -59,38 +56,23 @@ func parseLayout(input *OperationData, _ chan any) error {
 	)
 
 	if err != nil {
-		return fmt.Errorf("parse layout: %w: %v#%v", err, input.ExcelName, input.SheetName)
+		return fmt.Errorf("parse layout: %v#%v: %w", input.ExcelName, input.SheetName, err)
 	} // if
 
 	layout := layouts.NewLayout()
-	lineTag := line[input.LineOfTag][sheeter.OutputCol:]   // 尋訪時, 以標籤行為主
-	lineName := line[input.LineOfName][sheeter.OutputCol:] // 第sheeter.OutputCol欄之後才是資料欄, 因此在前面過濾掉
-	lineNote := line[input.LineOfNote][sheeter.OutputCol:]
-	lineField := line[input.LineOfField][sheeter.OutputCol:]
+	lineTag := line[input.LineOfTag]
+	lineName := line[input.LineOfName]
+	lineNote := line[input.LineOfNote]
+	lineField := line[input.LineOfField]
 
-	for col, itor := range lineTag {
-		if itor == "" { // 一旦遇到空欄位, 就結束建立欄位列表
-			break
-		} // if
-
-		tag := itor
-		name := utils.GetItem(lineName, col)
-		note := utils.GetItem(lineNote, col)
-		field, err := fields.Parser(utils.GetItem(lineField, col))
-
-		if err != nil {
-			return fmt.Errorf("parse layout: %w: %v#%v(column:%v)", err, input.ExcelName, input.SheetName, col)
-		} // if
-
-		if err := layout.Add(tag, name, note, field); err != nil {
-			return fmt.Errorf("parse layout: %w: %v#%v(column:%v)", err, input.ExcelName, input.SheetName, col)
-		} // if
-	} // for
+	if err = layout.Set(lineTag, lineName, lineNote, lineField); err != nil {
+		return fmt.Errorf("parse layout: %v#%v: %w", input.ExcelName, input.SheetName, err)
+	} // if
 
 	pkey := layout.Pkey(input.Tag)
 
 	if pkey == nil {
-		return fmt.Errorf("parse layout: pkey not exist: %v#%v", input.ExcelName, input.SheetName)
+		return fmt.Errorf("parse layout: %v#%v: pkey not exist", input.ExcelName, input.SheetName)
 	} // if
 
 	input.Pkey = &nameds.Pkey{

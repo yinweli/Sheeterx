@@ -7,7 +7,7 @@ const Version = "2.0.0"   // 版本字串, 遵循'大版本.小版本.修正版�
 const BarWidth = 40       // 進度條寬度
 const MaxExcel = 999999   // 最大開啟excel數量
 const MaxSheet = 999999   // 最大開啟sheet數量
-const OutputCol = 1       // 輸出欄號
+const OutputIndex = 0     // 輸出欄索引值
 
 /* 路徑名 */
 
